@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EurekaAI - الذكاء الاصطناعي المتقدم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#4F46E5',
+                        accent: '#EC4899',
+                        dark: '#181818'
+                    },
+                    fontFamily: {
+                        'arabic': ['Cairo', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'fade-in-left': 'fadeInLeft 0.6s ease-out',
+                        'fade-in-right': 'fadeInRight 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #5D5CDE, #4F46E5, #EC4899, #8B5CF6);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ai-grid {
+            background-image: 
+                linear-gradient(to right, rgba(93, 92, 222, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(93, 92, 222, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(93, 92, 222, 0.3);
+        }
+        
+        .dark .glow {
+            box-shadow: 0 0 30px rgba(93, 92, 222, 0.5);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #5D5CDE, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-dark transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="text-2xl font-bold text-gradient">
+                        <i class="fas fa-brain mr-2"></i>
+                        EurekaAI
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8 space-x-reverse">
+                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الميزات</a>
+                    <a href="#services" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الخدمات</a>
+                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">من نحن</a>
+                    <button class="bg-primary text-white px-6 py-2 rounded-full hover:bg-secondary transition-all duration-300 glow">
+                        ابدأ الآن
+                    </button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-effect">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                <a href="#features" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الميزات</a>
+                <a href="#services" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">الخدمات</a>
+                <a href="#about" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">من نحن</a>
+                <button class="w-full text-left bg-primary text-white px-3 py-2 rounded-lg hover:bg-secondary transition-all duration-300">
+                    ابدأ الآن
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center ai-grid">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-fade-in-up">
+                <div class="mb-8">
+                    <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center animate-float glow">
+                        <i class="fas fa-robot text-4xl text-white"></i>
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+                    مرحباً بك في 
+                    <span class="text-gradient">EurekaAI</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    اكتشف قوة الذكاء الاصطناعي المتقدم. حلول ذكية تساعدك على تحقيق أهدافك بسرعة ودقة لا مثيل لها
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-secondary transition-all duration-300 glow transform hover:scale-105" onclick="window.location.href='XY.html'">
+                        <i class="fas fa-rocket mr-2"></i>
+                        جربه مجاناً
+                    </button>
+                    <button class="border-2 border-primary text-primary dark:text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+                        <i class="fas fa-play-circle mr-2"></i>
+                        شاهد العرض التوضيحي
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-primary opacity-20 rounded-full animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute bottom-20 right-10 w-16 h-16 bg-accent opacity-20 rounded-full animate-float" style="animation-delay: -1s;"></div>
+        <div class="absolute top-1/2 left-20 w-12 h-12 bg-secondary opacity-20 rounded-full animate-float" style="animation-delay: -3s;"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    ميزات <span class="text-gradient">استثنائية</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    تقنيات متطورة تجعل تجربتك مع الذكاء الاصطناعي سهلة وفعالة
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-brain text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">تعلم ذكي</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        خوارزميات متطورة تتعلم من بياناتك وتتحسن مع الوقت لتقديم نتائج أكثر دقة
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-accent to-secondary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-lightning-bolt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">سرعة فائقة</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        معالجة سريعة للبيانات والاستعلامات مع زمن استجابة لا يتجاوز الثواني
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary to-primary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">أمان متقدم</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        حماية عالية المستوى لبياناتك مع تشفير من الطراز العالمي وأمان لا يُخترق
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group" style="animation-delay: 0.3s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-cogs text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">سهولة الاستخدام</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        واجهة بديهية وسهلة التعلم تجعل الذكاء الاصطناعي في متناول الجميع
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">تحليلات متقدمة</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        رؤى عميقة وتحليلات شاملة تساعدك على اتخاذ قرارات مدروسة
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up group" style="animation-delay: 0.5s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-mobile-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">متوافق مع جميع الأجهزة</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        يعمل بسلاسة على الهواتف الذكية والأجهزة اللوحية وأجهزة الكمبيوتر
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white dark:bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    خدماتنا <span class="text-gradient">المتميزة</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    حلول شاملة للذكاء الاصطناعي تغطي جميع احتياجاتك
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in-left">
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-comments text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">معالجة اللغة الطبيعية</h3>
+                                <p class="text-gray-600 dark:text-gray-300">فهم وتحليل النصوص العربية والإنجليزية بدقة عالية</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-image text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">تحليل الصور</h3>
+                                <p class="text-gray-600 dark:text-gray-300">تقنيات متطورة للتعرف على الأشياء والوجوه والنصوص في الصور</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">المساعد الذكي</h3>
+                                <p class="text-gray-600 dark:text-gray-300">مساعد ذكي يتفهم احتياجاتك ويقدم إجابات دقيقة ومفيدة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-fade-in-right">
+                    <div class="relative">
+                        <div class="w-full h-96 bg-gradient-to-br from-primary to-accent rounded-3xl flex items-center justify-center glow">
+                            <i class="fas fa-microchip text-8xl text-white opacity-20"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20 rounded-3xl flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-play-circle text-6xl mb-4 hover:scale-110 transition-transform duration-300 cursor-pointer"></i>
+                                <p class="text-lg font-semibold">شاهد كيف يعمل EurekaAI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                    جاهز لبدء رحلتك مع الذكاء الاصطناعي؟
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+                    انضم إلى آلاف المستخدمين الذين يثقون في EurekaAI لتحقيق أهدافهم
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-secondary transition-all duration-300 glow transform hover:scale-105">
+                        <i class="fas fa-rocket mr-2"></i>
+                        ابدأ التجربة المجانية
+                    </button>
+                    <button class="border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-full text-lg font-semibold hover:border-primary hover:text-primary transition-all duration-300">
+                        <i class="fas fa-phone mr-2"></i>
+                        تواصل معنا
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="text-3xl font-bold text-gradient mb-4">
+                        <i class="fas fa-brain mr-2"></i>
+                        EurekaAI
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md">
+                        نحن في المقدمة لتقديم حلول الذكاء الاصطناعي المتطورة التي تساعد الشركات والأفراد على تحقيق أهدافهم بكفاءة وذكاء.
+                    </p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors">الميزات</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors">الخدمات</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors">من نحن</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">تواصل معنا</h3>
+                    <ul class="space-y-2">
+                        <li class="text-gray-300">
+                            <i class="fas fa-envelope mr-2"></i>
+                            info@eurekaai.com
+                        </li>
+                        <li class="text-gray-300">
+                            <i class="fas fa-phone mr-2"></i>
+                            +966 50 123 4567
+                        </li>
+                        <li class="text-gray-300">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            الرياض، المملكة العربية السعودية
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2024 EurekaAI. جميع الحقوق محفوظة.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('[class*="animate-"]').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('backdrop-blur-md');
+            } else {
+                nav.classList.remove('backdrop-blur-md');
+            }
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('#home');
+            const rate = scrolled * -0.5;
+            
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Add hover effects to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const heroTitle = document.querySelector('#home h1');
+                if (heroTitle) {
+                    const originalText = heroTitle.textContent;
+                    typeWriter(heroTitle, originalText, 80);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
